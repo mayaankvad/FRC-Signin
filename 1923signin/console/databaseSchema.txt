@@ -1,0 +1,25 @@
+CREATE TABLE `users` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `nameID` varchar(200) NOT NULL,
+    `fullName` varchar(200) NOT NULL,
+    `email` varchar(200) NOT NULL,
+    `subteam` varchar(200) NOT NULL,
+    `robotDay` varchar(200) NOT NULL,
+    `seconds` bigint(20) NOT NULL,
+    `online` int(11) NOT NULL DEFAULT '0',
+    `lastLogin` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB AUTO_INCREMENT=6
+DEFAULT CHARSET=latin1 COMMENT='Critical data for all users';
+
+
+CREATE TABLE `logs` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `nameID` varchar(200) NOT NULL,
+    `flag` int(11) NOT NULL,
+    `logTime` datetime NOT NULL,
+    PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB AUTO_INCREMENT=19
+DEFAULT CHARSET=latin1 COMMENT='Stores specific signin data ';
