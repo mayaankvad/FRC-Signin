@@ -19,7 +19,6 @@ if(isset($_POST['change-password'])) {
 }
 
 
-
 ?>
 
 <!DOCTYPE html>
@@ -99,7 +98,7 @@ if(isset($_POST['change-password'])) {
                 <input type="submit" id="submit" class="btn btn-primary submit" name="change-password" value="Change Password" disabled><br>
                 <small id="" class="form-text text-muted">
                     Every device will be forced back to the login screen if password change is successful<br>
-                    Use the new Password to get back in<br><br>
+		    (Dont be alarmed when you see 'Incorrect Password' on the login page, Just use the new password to get back in!)<br><br>
                 </small>
             </form>
         </div>
