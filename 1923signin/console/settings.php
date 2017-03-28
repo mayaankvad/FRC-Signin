@@ -7,15 +7,17 @@ if(isset($_POST['deAuthenticate'])) {
 }
 
 if(isset($_POST['change-password'])) {
-    if(md5($_POST['old-password'] == md5($password))) {
-        $file = fopen("passwords/password.txt", "w") or nicedie("Unable To Change Password due to a system error.", true);
+    if( md5($_POST['old-password']) != md5($password) ) {
+		message("Password not changed", "Incorrect Password");
+    }
+    else {
+		$file = fopen("passwords/password.txt", "w") or nicedie("Unable To Change Password due to a system error.", true);
         fwrite($file, $_POST['confirm-password']);
         fclose($file);
         message('Password Changed');
-    }
-    else
-        message("Password not changed", "Incorrect Password");
+	}
 }
+
 
 
 ?>
