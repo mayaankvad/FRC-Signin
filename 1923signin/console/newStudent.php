@@ -6,7 +6,6 @@ authenticate();
 if(isset($_POST['submit'])) {
 
     $fullName = $_POST['name'];
-    $email = $_POST['email'];
     $subteam = $_POST['subteam'];
     $day = $_POST['day'];
     $hours = $_POST['hours'];
@@ -14,7 +13,7 @@ if(isset($_POST['submit'])) {
     $nameID = toNameID($fullName);
     $seconds = $hours * 3600;
 
-    $query = "INSERT INTO users(nameID, fullName, email, subteam, robotDay, seconds) VALUES ('$nameID', '$fullName', '$email', '$subteam', '$day', '$seconds');";
+    $query = "INSERT INTO users(nameID, fullName, subteam, robotDay, seconds) VALUES ('$nameID', '$fullName', '$subteam', '$day', '$seconds');";
 
     $result = mysqli_query($conn, $query);
 
@@ -93,15 +92,6 @@ if(isset($_POST['submit'])) {
 
             </div>
             <div id="response">
-            </div>
-            <br>
-
-            <!-- Email -->
-            <div class="form-group">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autocomplete="off">
-                <small id="email-help" class="form-text text-muted">
-                    We must be able to contact you through this email. Make sure its one you actually check<br>
-                </small>
             </div>
             <br>
 

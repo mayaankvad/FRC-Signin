@@ -21,7 +21,6 @@ else {
     $row = mysqli_fetch_array($result);
     $arr = [
         'fullName' => $row['fullName'],
-        'email' => $row['email'],
         'subteam' => $row['subteam'],
         'robotDay' => $row['robotDay'],
         'seconds' => $row['seconds'],

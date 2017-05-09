@@ -33,7 +33,6 @@ authenticate();
                 <thead>
                     <tr>
                         <th>Full Name</th>
-                        <th>Email</th>
                         <th>Subteam</th>
                         <th>Robot Day</th>
                         <th>Hours</th>
@@ -51,7 +50,6 @@ authenticate();
 
                     while($row = mysqli_fetch_array($result)) {
                         $fullName = $row['fullName'];
-                        $email = $row['email'];
                         $subteam = $row['subteam'];
                         $day = $row['robotDay'];
                         $seconds =  $row['seconds'];
@@ -60,7 +58,7 @@ authenticate();
                         $time = formatSeconds($seconds);
                         $seen = formatDate($lastLogin);
 
-                        echo "<tr class='info'><td>$fullName</td><td>$email</td><td>$subteam</td><td>$day</td><td>$time</td><td>$seen</td></tr>";
+                        echo "<tr class='info'><td>$fullName</td><td>$subteam</td><td>$day</td><td>$time</td><td>$seen</td></tr>";
                     }
 
                     ?>

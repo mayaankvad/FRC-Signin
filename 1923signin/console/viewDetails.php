@@ -13,7 +13,6 @@ if(isset($_SESSION['viewUser'])) {
     $row = mysqli_fetch_array($result);
 
     $fullName = $row['fullName'];
-    $email = $row['email'];
     $subteam = $row['subteam'];
     $day = $row['robotDay'];
     $seconds =  $row['seconds'];
@@ -84,10 +83,6 @@ if(isset($_POST['change-profile'])) {
                     <tr>
                         <td>Full Name</td>
                         <td><?php echo $fullName ?></td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td><?php echo $email ?></td>
                     </tr>
                     <tr>
                         <td>Subteam</td>

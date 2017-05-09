@@ -67,8 +67,8 @@ if(isset($_POST['submit'])) {
                 echo '<div style="font-size: 20px; color: green;" >Deactivate Successful</div>';
             }
 
-            /* a way to break in (Might be uncomented on production later)
-            if((isset($_GET['admin']) && $_GET['admin'] == 'frc') && (isset($_GET['password']) && $_GET['password'] == '1923')) {
+            /* a way to break in 
+            if((isset($_GET['admin']) && $_GET['admin'] == 'root') && (isset($_GET['password']) && $_GET['password'] == 'admin')) {
                 nicedie("Password: $password <br>", 'System Administrator - Emergency Override');
             } */
 
@@ -83,7 +83,12 @@ if(isset($_POST['submit'])) {
 
         </form>
 
+		<!--
         <br><small class="text-muted" style="font-size: 15px">by Mayaank 😎</small>
+		-->
+
+		<br><br><br><small class="text-muted wow bounceInUp" style="font-size: 10px; font-family: monospace" data-wow-delay="5s" data-wow-duration="10s"><i>-- By Mayaank</i></small>
+
 
     </div>
 

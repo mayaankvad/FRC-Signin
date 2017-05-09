@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$helpText = "<div class='text-muted' style='font-size: 15px !important;'>If you need help text Mayaank now at 732-567-4753</div>";
+$helpText = "<div class='text-muted' style='font-size: 15px !important;'>If you need help text me now at 732-567-4753</div>";
 
 if(!isset($_SESSION['message'])) {
     header('Location: index.php');

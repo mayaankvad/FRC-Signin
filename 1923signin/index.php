@@ -98,7 +98,7 @@
     <button class="btn btn-default mki-btn center-block wow fadeInUp" data-wow-delay="1.3s" data-wow-duration="3s" onclick="window.location.href = 'register/'">Register</button> <br>
     <button class="btn btn-default mki-btn center-block wow fadeInUp" data-wow-delay="1.6s" data-wow-duration="3s" onclick="window.location.href = 'console/'">Go to Console</button>
 
-	<br><br><br><small class="text-muted wow bounceInUp" style="font-size: 15px; font-family: monospace" data-wow-delay="5s" data-wow-duration="10s"><i>-- By Mayaank</i></small>
+	<br><br><br><small class="text-muted wow bounceInUp" style="font-size: 10px; font-family: monospace" data-wow-delay="5s" data-wow-duration="10s"><i>-- By Mayaank</i></small>
 
 </div>
 
