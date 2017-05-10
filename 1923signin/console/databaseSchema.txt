@@ -1,4 +1,4 @@
-CREATE TABLE `users` (
+REATE TABLE `users` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `nameID` varchar(200) NOT NULL,
     `fullName` varchar(200) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE `users` (
     `lastLogin` datetime DEFAULT NULL,
     PRIMARY KEY (`id`)
 )
-ENGINE=InnoDB AUTO_INCREMENT=6
+ENGINE=InnoDB
 DEFAULT CHARSET=latin1 COMMENT='Critical data for all users';
 
 
@@ -20,5 +20,5 @@ CREATE TABLE `logs` (
     `logTime` datetime NOT NULL,
     PRIMARY KEY (`id`)
 )
-ENGINE=InnoDB AUTO_INCREMENT=19
+ENGINE=InnoDB
 DEFAULT CHARSET=latin1 COMMENT='Stores specific signin data ';

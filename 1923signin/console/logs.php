@@ -5,13 +5,13 @@ authenticate();
 $view = toNameID(urldecode($_GET['view']));
 
 $query = <<<END
-SELECT Date_Format(a.logTime, '%d/%m/%y') AS logDate, a.nameID, Date_Format(a.logtime, '%k:%i') AS signinTime,
+SELECT Date_Format(a.logTime, '%m/%d/%y') AS logDate, a.nameID, Date_Format(a.logtime, '%k:%i') AS signinTime,
     (SELECT Date_Format(b.logTime, '%k:%i') FROM logs b
-     WHERE Date_Format(b.logTime, '%d/%m/%y') = Date_Format(a.logTime, '%d/%m/%y') AND
+     WHERE Date_Format(b.logTime, '%m/%d/%y') = Date_Format(a.logTime, '%m/%d/%y') AND
      b.nameID = a.nameID AND
      b.flag = 0) AS signoutTime
 FROM logs a
-WHERE a.flag = 1 
+WHERE a.flag = 1
 END;
 
 /*nameID, signinTime, signoutTime*/

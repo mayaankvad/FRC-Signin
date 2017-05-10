@@ -15,7 +15,7 @@ authenticate();
 
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="../favicon.ico">
-    
+
 </head>
 
 <body>
@@ -31,37 +31,37 @@ authenticate();
         <div class="table-responsive">
             <table class="table" id="table">
                 <thead>
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Subteam</th>
-                        <th>Robot Day</th>
-                        <th>Hours</th>
-                        <th>Last Login</th>
-                    </tr>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Subteam</th>
+                    <th>Robot Day</th>
+                    <th>Hours</th>
+                    <th>Last Login</th>
+                </tr>
                 </thead>
                 <tbody>
 
-                    <?php
+                <?php
 
-                    $query = "SELECT * FROM users";
-                    $result = mysqli_query($conn, $query);
+                $query = "SELECT * FROM users";
+                $result = mysqli_query($conn, $query);
 
-                    if(!$result) nicedie("Database error. Reason: <br>" . mysqli_error($conn));
+                if(!$result) nicedie("Database error. Reason: <br>" . mysqli_error($conn));
 
-                    while($row = mysqli_fetch_array($result)) {
-                        $fullName = $row['fullName'];
-                        $subteam = $row['subteam'];
-                        $day = $row['robotDay'];
-                        $seconds =  $row['seconds'];
-                        $lastLogin = $row['lastLogin'];
+                while($row = mysqli_fetch_array($result)) {
+                    $fullName = $row['fullName'];
+                    $subteam = $row['subteam'];
+                    $day = $row['robotDay'];
+                    $seconds =  $row['seconds'];
+                    $lastLogin = $row['lastLogin'];
 
-                        $time = formatSeconds($seconds);
-                        $seen = formatDate($lastLogin);
+                    $time = formatSeconds($seconds);
+                    $seen = formatDate($lastLogin);
 
-                        echo "<tr class='info'><td>$fullName</td><td>$subteam</td><td>$day</td><td>$time</td><td>$seen</td></tr>";
-                    }
+                    echo "<tr class='info'><td>$fullName</td><td>$subteam</td><td>$day</td><td>$time</td><td>$seen</td></tr>";
+                }
 
-                    ?>
+                ?>
 
                 </tbody>
             </table>

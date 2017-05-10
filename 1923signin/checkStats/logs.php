@@ -2,6 +2,7 @@
 
 include '../databaseConfig.php';
 
+$title = 'The MidKnight Inventors';
 
 function formatSeconds($seconds) {
     return ($seconds == null)? 0: gmdate("H:i:s", intval($seconds));
@@ -95,6 +96,7 @@ if(!$result)
     <title><?php echo $title ?></title>
 
     <link rel="stylesheet" href="../console/style.css">
+    <link rel="shortcut icon" href="../favicon.ico">
 
 </head>
 
@@ -170,3 +172,8 @@ END;
 </body>
 
 </html>
+
+<?php
+mysqli_close($conn);
+?>
+

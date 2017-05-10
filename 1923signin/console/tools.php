@@ -13,14 +13,17 @@ $file = fopen("passwords/password.txt", "r") or nicedie('Could Not Fetch Passwor
 $password = fgets($file);
 fclose($file);
 
+// seconds -> hr:min:sec
 function formatSeconds($seconds) {
     return ($seconds == null)? 0: gmdate("H:i:s", intval($seconds));
 }
 
+// date -> m/d/y
 function formatDate($date) {
-    return ($date == null)? "Never": date("d/m/y", strtotime($date));
+    return ($date == null)? "Never": date("m / d / Y", strtotime($date));
 }
 
+// time -> hr: min
 function formatTime($time) {
     return ($time== null)? 0: date("h:i:sa", strtotime($time));
 }
@@ -115,7 +118,7 @@ function signin($name) {
 
 
     // Sign User In
-    $query = "UPDATE users SET online = 1, lastLogin = UNIX_TIMESTAMP() WHERE nameID = '$nameID'";
+    $query = "UPDATE users SET online = 1, lastLogin = NOW() WHERE nameID = '$nameID'";
     $result = mysqli_query($conn, $query);
     if(!$result) nicedie("Could not Sign In $fullName, Reason: <br>". mysqli_error($conn));
 
@@ -149,7 +152,7 @@ function signout($name, $force=false) {
     // get last seen time
     $timeIn = strtotime($row['lastLogin']);
 
-    // calculate time spent loged in
+    // calculate time spent logged in
     $sessionTime = time() - $timeIn;
 
     // set New Total Time
@@ -191,7 +194,7 @@ function signoutall($force=false) {
         signout($row['nameID'], $force);
         $out++;
     }
-    
+
     if(!$force)
         message("Successfully signed out $out users",'Signed Out ALl', 5);
     else

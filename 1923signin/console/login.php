@@ -67,7 +67,7 @@ if(isset($_POST['submit'])) {
                 echo '<div style="font-size: 20px; color: green;" >Deactivate Successful</div>';
             }
 
-            /* a way to break in 
+            /* a way to break in
             if((isset($_GET['admin']) && $_GET['admin'] == 'root') && (isset($_GET['password']) && $_GET['password'] == 'admin')) {
                 nicedie("Password: $password <br>", 'System Administrator - Emergency Override');
             } */
