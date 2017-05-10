@@ -4,6 +4,7 @@ include 'config.php';
 include '../databaseConfig.php';
 date_default_timezone_set('America/New_York');
 
+// connect to Database
 $conn = mysqli_connect($DBhost, $DBuser, $DBpassword, $DBname);
 if(!$conn) nicedie('Database Connection Failed<br>Reason: ' . mysqli_connect_error());
 
@@ -157,7 +158,7 @@ function signout($name, $force=false) {
 
     // set New Total Time
     if(!$force)
-        $totalTime = $sessionTime + $row['seconds'];
+        $totalTime = $sessionTime + intval($row['seconds']);
     else
         $totalTime = $row['seconds'];
 
