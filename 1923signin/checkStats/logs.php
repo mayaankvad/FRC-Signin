@@ -30,44 +30,20 @@ function getFormattedName($name) {
 }
 
 $copyright = '<br><div class="copyright">Copyright &copy; 2017 Team 1923 The MidKnight Inventors, All Rights Reserved</div>';
-$imports = <<<END
-<cdn>
-    <!-- Links to resources -->
-        <!-- JQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Enables Bootstrap compatibility -->
-        <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Enables Bootstrap compatibility -->
-
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!-- Animation resources -->
-            <!-- Animate css-->
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
-
-            <!-- WOW js -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-            <script>new WOW().init();</script>
-</cdn>
-END;
 
 ////////
 $conn = mysqli_connect($DBhost, $DBuser, $DBpassword, $DBname);
 if(!$conn) nicedie('Database Connection Failed<br>Reason: ' . mysqli_connect_error());
 
-
 $view = toNameID(urldecode($_GET['view']));
+if($view == 'all')
+    header('Location: index.php');
 
 $query = <<<END
-SELECT Date_Format(a.logTime, '%d/%m/%y') AS logDate, a.nameID, Date_Format(a.logtime, '%k:%i') AS signinTime,
+SELECT Date_Format(a.logTime, '%m/%d/%y') AS logDate, a.nameID, Date_Format(a.logtime, '%k:%i') AS signinTime,
     (SELECT Date_Format(b.logTime, '%k:%i') FROM logs b
-     WHERE Date_Format(b.logTime, '%d/%m/%y') = Date_Format(a.logTime, '%d/%m/%y') AND
+     WHERE Date_Format(b.logTime, '%m/%d/%y') = Date_Format(a.logTime, '%m/%d/%y') AND
      b.nameID = a.nameID AND
      b.flag = 0) AS signoutTime
 FROM logs a
@@ -79,7 +55,7 @@ END;
 $result = mysqli_query($conn, $query);
 
 if(!$result)
-    message('Database Error, Did you sign in a user more then once?. <br>' . mysqli_error($conn) .
+    message('Database Error, <u>Did you sign in a user more then once today?</u>. <br>' . mysqli_error($conn) .
         "<br> The logs still exist but we cant display them right now"
         , "Failed to render logs", 7);
 
@@ -97,6 +73,31 @@ if(!$result)
 
     <link rel="stylesheet" href="../console/style.css">
     <link rel="shortcut icon" href="../favicon.ico">
+
+    <cdn>
+        <!-- Links to resources -->
+        <!-- JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Enables Bootstrap compatibility -->
+        <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Enables Bootstrap compatibility -->
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Animation resources -->
+        <!-- Animate css-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
+
+        <!-- WOW js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+        <script>new WOW().init();</script>
+    </cdn>
 
 </head>
 
@@ -126,14 +127,21 @@ if(!$result)
 
                 <?php
 
+                $previous = '';
                 while($row = mysqli_fetch_array($result)) {
                     $nameID = $row['nameID'];
-                    $date = formatDate($row['logDate']);
+                    $date = $row['logDate']; // formatDate($row['logDate']);
                     $signin = formatTime($row['signinTime']);
                     $signout = formatTime($row['signoutTime']);
 
                     $fullName = getFormattedName($nameID);
                     $time = ($signout != null) ? formatSeconds(strtotime($signout) - strtotime($signin)) : null;
+
+                    if($date != $previous) {
+                        $d = date("l, F j, Y", strtotime( $date ));
+                        echo "<tr class='success'><td align='left'>$d</td><td></td><td></td><td></td><td></td></tr>";
+                        $previous = $date;
+                    }
 
                     if($view == 'all' || $view == $nameID) echo <<<END
                     <tr class='success'>
@@ -153,10 +161,10 @@ END;
         </div>
 
 
-        <?php echo $imports ?>
+
         <!-- Link for download as xls scripts -->
-        <script type="text/javascript" src="../console/scripts/tableExport.js"></script>
-        <script type="text/javascript" src="../console/scripts/jquery.base64.js"></script>
+        <script type="text/javascript" src="scripts/tableExport.js"></script>
+        <script type="text/javascript" src="scripts/jquery.base64.js"></script>
 
         <br><br>
         <button class="btn btn-primary" onClick ="$('#log-table').tableExport({type:'excel',escape:'false'});">
@@ -172,8 +180,4 @@ END;
 </body>
 
 </html>
-
-<?php
-mysqli_close($conn);
-?>
 
