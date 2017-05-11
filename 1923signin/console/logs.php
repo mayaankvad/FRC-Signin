@@ -69,9 +69,14 @@ if(!$result)
                 $previous = '';
                 while($row = mysqli_fetch_array($result)) {
                     $nameID = $row['nameID'];
-                    $date = $row['logDate']; // formatDate($row['logDate']);
+                    $date = $row['logDate'];
+
                     $signin = formatTime($row['signinTime']);
-                    $signout = formatTime($row['signoutTime']);
+                    //$signout = formatTime($row['signoutTime']);
+                    if($row['signoutTime'] == null )
+                        $signout = "Did Not Sign Out";
+                    else
+                        $signout = formatTime($row['signoutTime']);
 
                     $fullName = getFormattedName($nameID);
                     $time = ($signout != null) ? formatSeconds(strtotime($signout) - strtotime($signin)) : null;

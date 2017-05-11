@@ -16,9 +16,28 @@ authenticate();
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
+    <script>
+        function run() {
+            getAll();
+            setTimeout(run, 1000);
+        }
+
+        function getAll() {
+            var data = document.getElementById('data');
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    data.innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "ajax/getAll.php", true);
+            xmlhttp.send();
+        }
+    </script>
+
 </head>
 
-<body>
+<body onload="run()">
 
 <div class="container">
 
@@ -39,29 +58,9 @@ authenticate();
                     <th>Last Login</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="data">
 
-                <?php
-
-                $query = "SELECT * FROM users";
-                $result = mysqli_query($conn, $query);
-
-                if(!$result) nicedie("Database error. Reason: <br>" . mysqli_error($conn));
-
-                while($row = mysqli_fetch_array($result)) {
-                    $fullName = $row['fullName'];
-                    $subteam = $row['subteam'];
-                    $day = $row['robotDay'];
-                    $seconds =  $row['seconds'];
-                    $lastLogin = $row['lastLogin'];
-
-                    $time = formatSeconds($seconds);
-                    $seen = formatDate($lastLogin);
-
-                    echo "<tr class='info'><td>$fullName</td><td>$subteam</td><td>$day</td><td>$time</td><td>$seen</td></tr>";
-                }
-
-                ?>
+                    <!-- Filled in through ajax call -->
 
                 </tbody>
             </table>

@@ -1,9 +1,11 @@
 <?php
 session_start();
 
-// Database Connections
 include '../databaseConfig.php';
+include '../config.php';
+include '../formatting.php';
 
+// Database Connection
 $conn = mysqli_connect($DBhost, $DBuser, $DBpassword, $DBname);
 if(!$conn) display('Database Connection Failed<br>Reason: ' . mysqli_connect_error());
 
@@ -28,10 +30,6 @@ if(isset($_POST['submit'])) {
     else
         display("Ok $fullName, you are now on team 1923 ", "New Member Added!");
 
-}
-
-function toNameID($name) {
-    return strtolower(str_replace(' ', '', $name));
 }
 
 
@@ -101,7 +99,7 @@ function display($message, $heading=null) {
     <div class="content-block">
 
 
-        <img src="../banner.png" alt="The MidKnight Inventors" width="" class="img img-responsive center-block">
+        <img src="../banner.png" alt="The MidKnight Inventors" width="" class="img img-responsive center-block" onclick="window.location.href='../'">
         <h1>Sign Up for Team 1923</h1><hr>
 
         <form action="" method="post">
@@ -158,30 +156,7 @@ function display($message, $heading=null) {
 
 </div>
 
-<cdn>
-    <!-- Links to resources -->
-        <!-- JQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Enables Bootstrap compatibility -->
-        <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Enables Bootstrap compatibility -->
-
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!-- Animation resources -->
-            <!-- Animate css-->
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
-
-            <!-- WOW js -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-            <script>new WOW().init();</script>
-</cdn>
+<?php echo $imports ?>
 
 </body>
 

@@ -1,25 +1,9 @@
 <?php
 
 include '../databaseConfig.php';
+include '../config.php';
+include '../formatting.php';
 
-$title = 'The MidKnight Inventors';
-
-function formatSeconds($seconds) {
-    return ($seconds == null)? 0: gmdate("H:i:s", intval($seconds));
-}
-
-function formatDate($date) {
-    return ($date == null)? "Never": date("d/m/y", strtotime($date));
-}
-
-function formatTime($time) {
-    return ($time== null)? 0: date("h:i:sa", strtotime($time));
-}
-
-
-function toNameID($name) {
-    return strtolower(str_replace(' ', '', $name));
-}
 
 function getFormattedName($name) {
     global $conn;
@@ -28,9 +12,6 @@ function getFormattedName($name) {
     $result = mysqli_query($conn, $query);
     return (!$result || mysqli_num_rows($result) <= 0) ? null: mysqli_fetch_array($result)['fullName'];
 }
-
-$copyright = '<br><div class="copyright">Copyright &copy; 2017 Team 1923 The MidKnight Inventors, All Rights Reserved</div>';
-
 
 ////////
 $conn = mysqli_connect($DBhost, $DBuser, $DBpassword, $DBname);
@@ -74,30 +55,7 @@ if(!$result)
     <link rel="stylesheet" href="../console/style.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
-    <cdn>
-        <!-- Links to resources -->
-        <!-- JQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Enables Bootstrap compatibility -->
-        <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Enables Bootstrap compatibility -->
-
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!-- Animation resources -->
-        <!-- Animate css-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
-
-        <!-- WOW js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-        <script>new WOW().init();</script>
-    </cdn>
+    <?php echo $imports ?>
 
 </head>
 
@@ -130,9 +88,14 @@ if(!$result)
                 $previous = '';
                 while($row = mysqli_fetch_array($result)) {
                     $nameID = $row['nameID'];
-                    $date = $row['logDate']; // formatDate($row['logDate']);
+                    $date = $row['logDate'];
+
                     $signin = formatTime($row['signinTime']);
-                    $signout = formatTime($row['signoutTime']);
+                    //$signout = formatTime($row['signoutTime']);
+                    if($row['signoutTime'] == null )
+                        $signout = "Did Not Sign Out";
+                    else
+                        $signout = formatTime($row['signoutTime']);
 
                     $fullName = getFormattedName($nameID);
                     $time = ($signout != null) ? formatSeconds(strtotime($signout) - strtotime($signin)) : null;
@@ -163,8 +126,8 @@ END;
 
 
         <!-- Link for download as xls scripts -->
-        <script type="text/javascript" src="scripts/tableExport.js"></script>
-        <script type="text/javascript" src="scripts/jquery.base64.js"></script>
+        <script type="text/javascript" src="../console/scripts/tableExport.js"></script>
+        <script type="text/javascript" src="../console/scripts/jquery.base64.js"></script>
 
         <br><br>
         <button class="btn btn-primary" onClick ="$('#log-table').tableExport({type:'excel',escape:'false'});">

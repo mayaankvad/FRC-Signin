@@ -52,7 +52,7 @@ if(isset($_POST['submit'])) {
 
     <div <?php echo (!isset($_GET['error'])) ? 'class="content-block wow fadeIn" data-wow-delay="0.5s" data-wow-duration="2s"' : 'class="content-block"' ?>>
 
-        <img src="../banner.png" alt="<h1>FRC 1923: The MidKnight Inventors Sign In</h1>" class="img img-responsive">
+        <img src="../banner.png" alt="<h1>FRC 1923: The MidKnight Inventors Sign In</h1>" class="img img-responsive" onclick="window.location.href='../'">
         <h4 class="text-center">Authentication Required</h4><br><hr>
 
         <form action="" method="post">

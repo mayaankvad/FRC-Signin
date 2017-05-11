@@ -1,7 +1,9 @@
 <?php
 session_start();
-include 'config.php';
+include '../config.php';
 include '../databaseConfig.php';
+include '../formatting.php';
+
 date_default_timezone_set('America/New_York');
 
 // connect to Database
@@ -14,28 +16,6 @@ $file = fopen("passwords/password.txt", "r") or nicedie('Could Not Fetch Passwor
 $password = fgets($file);
 fclose($file);
 
-// seconds -> hr:min:sec
-function formatSeconds($seconds) {
-    return ($seconds == null)? 0: gmdate("H:i:s", intval($seconds));
-}
-
-// date -> m/d/y
-function formatDate($date) {
-    return ($date == null)? "Never": date("m / d / Y", strtotime($date));
-}
-
-// time -> hr: min
-function formatTime($time) {
-    return ($time== null)? 0: date("h:i:sa", strtotime($time));
-}
-
-/*
- * Returnes a nameID from an inputed name
- * nameID is always lowercase with no spaces
- */
-function toNameID($name) {
-    return strtolower(str_replace(' ', '', $name));
-}
 
 /*
  * Gets FormattedName from the database
@@ -151,7 +131,7 @@ function signout($name, $force=false) {
     $row = mysqli_fetch_array($result);
 
     // get last seen time
-    $timeIn = strtotime($row['lastLogin']);
+    $timeIn = intval(strtotime($row['lastLogin']));
 
     // calculate time spent logged in
     $sessionTime = time() - $timeIn;
@@ -197,7 +177,7 @@ function signoutall($force=false) {
     }
 
     if(!$force)
-        message("Successfully signed out $out users",'Signed Out ALl', 5);
+        message("Successfully signed out $out users",'Signed Out All', 5);
     else
         message("Successfully force signed out $out users<br> No time was awarded",'Force Signed Out All', 5);
 

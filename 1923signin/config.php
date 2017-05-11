@@ -1,7 +1,5 @@
 <?php
 
-//include '../databaseConfig.php';
-
 $title = 'The MidKnight Inventors';
 $copyright = '<br><div class="copyright">Copyright &copy; 2017 Team 1923 The MidKnight Inventors, All Rights Reserved</div>';
 
@@ -12,7 +10,7 @@ $defaultMessageHeading = 'Message';
 $defaultMessageText = 'This page did not receive a message';
 $defaultMessageTime = '5';
 
-$helpText = "<div class='text-muted' style='font-size: 15px !important;'>If you need help text me @ 732-567-4753</div>";
+$helpText = "<div class='text-muted' style='font-size: 15px !important;'>If you need help text me !</div>";
 
 
 

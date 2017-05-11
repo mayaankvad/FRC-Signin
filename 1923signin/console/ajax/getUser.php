@@ -1,5 +1,17 @@
 <?php
-include 'tools.php';
+include '../../formatting.php';
+include '../../databaseConfig.php';
+include 'ajaxAuthenticate.php';
+
+authenticate();
+
+
+// connect to Database
+$conn = mysqli_connect($DBhost, $DBuser, $DBpassword, $DBname);
+if(!$conn) nicedie('Database Connection Failed<br>Reason: ' . mysqli_connect_error());
+
+
+//authenticate();
 
 if(!isset($_GET['q'])) {
     echo '{}';

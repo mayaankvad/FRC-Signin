@@ -66,7 +66,7 @@ if(isset($_POST['submit'])) {
 
                     }
                 };
-                xmlhttp.open("GET", "getUser.php?q=" + name , true);
+                xmlhttp.open("GET", "ajax/getUser.php?q=" + name , true);
                 xmlhttp.send();
             }
 

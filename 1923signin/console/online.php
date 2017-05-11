@@ -16,9 +16,28 @@ authenticate();
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
+    <script>
+        function run() {
+            getOnline();
+            setTimeout(run, 1000);
+        }
+
+        function getOnline() {
+            var data = document.getElementById('data');
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                        data.innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "ajax/getOnline.php", true);
+            xmlhttp.send();
+        }
+    </script>
+
 </head>
 
-<body>
+<body onload="run()">
 
 <div class="container">
 
@@ -35,21 +54,9 @@ authenticate();
                         <th>Online Now</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="data">
 
-                    <?php
-
-                    $query = "SELECT fullName FROM users WHERE online = 1";
-                    $result = mysqli_query($conn, $query);
-
-                    if(!$result) nicedie("Database error. Reason: <br>" . mysqli_error($conn));
-
-                    while($row = mysqli_fetch_array($result)) {
-                        $fullName = $row['fullName'];
-                        echo "<tr class='success'><td>$fullName</td></tr>";
-                    }
-
-                    ?>
+                    <!-- Filled in through ajax call -->
 
                 </tbody>
             </table>

@@ -73,7 +73,7 @@ if(isset($_POST['signout'])) {
 
                     }
                 };
-                xmlhttp.open("GET", "getUser.php?q=" + encodeURI(name), true);
+                xmlhttp.open("GET", "ajax/getUser.php?q=" + encodeURI(name), true);
                 xmlhttp.send();
             }
         }
