@@ -43,7 +43,7 @@ if(isset($_POST['signout'])) {
             var signOutButton = document.getElementById("signout-btn");
             var moreInfoButton = document.getElementById("moreinfo-btn");
 
-            if(name == "") {
+            if (name == "") {
                 signInButton.disabled = true;
                 signOutButton.disabled = true;
                 moreInfoButton.disabled = true;
@@ -53,7 +53,7 @@ if(isset($_POST['signout'])) {
                 xmlhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
 
-                        if(this.responseText == "{}") {
+                        if (this.responseText == "{}") {
                             signInButton.disabled = true;
                             signOutButton.disabled = true;
                             moreInfoButton.disabled = true;
@@ -61,11 +61,11 @@ if(isset($_POST['signout'])) {
                         else {
                             moreInfoButton.disabled = false;
                             var user = JSON.parse(this.responseText);
-                            if(user.online == 0) {
+                            if (user.online == 0) {
                                 signInButton.disabled = false;
                                 signOutButton.disabled = true;
                             }
-                            else if(user.online == 1) {
+                            else if (user.online == 1) {
                                 signInButton.disabled = true;
                                 signOutButton.disabled = false;
                             }
@@ -77,18 +77,21 @@ if(isset($_POST['signout'])) {
                 xmlhttp.send();
             }
         }
-    </script>
 
-    <!-- set autocomplete for names -->
-    <script>
+        function run() {
+            getUser();
+            setTimeout(run, 250);
+        }
+
+        // set autocomplete for names
         $( function() {
             var availableNames = [
                 <?php
-                $query = "SELECT fullName FROM users";
-                $result = mysqli_query($conn, $query);
-                while($row = mysqli_fetch_array($result)) {
-                    echo '"' . $row['fullName'] . '", ';
-                }
+                    $query = "SELECT fullName FROM users";
+                    $result = mysqli_query($conn, $query);
+                    while($row = mysqli_fetch_array($result)) {
+                        echo '"' . $row['fullName'] . '", ';
+                    }
                 ?>
             ];
             $("#name-input").autocomplete({
@@ -99,7 +102,7 @@ if(isset($_POST['signout'])) {
 
 </head>
 
-<body>
+<body onload="run()">
 
 <div class="container">
 
