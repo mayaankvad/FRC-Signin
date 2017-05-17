@@ -8,7 +8,7 @@ authenticate();
 
 // connect to Database
 $conn = mysqli_connect($DBhost, $DBuser, $DBpassword, $DBname);
-if(!$conn) nicedie('Database Connection Failed<br>Reason: ' . mysqli_connect_error());
+if(!$conn) die('Database Connection Failed<br>Reason: ' . mysqli_connect_error());
 
 
 //authenticate();

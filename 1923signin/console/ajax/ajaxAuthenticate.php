@@ -3,7 +3,7 @@ session_start();
 
 function authenticate() {
     // Get Password From File
-    $file = fopen("../passwords/password.txt", "r") or nicedie('Could Not Fetch Password. ');
+    $file = fopen("../passwords/password.txt", "r") or die('Could Not Fetch Password. ');
     $password = fgets($file);
     fclose($file);
 

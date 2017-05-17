@@ -43,7 +43,7 @@ authenticate();
 
     <div class="content-block">
 
-        <h1>Active Now</h1><hr><br>
+        <h1>Active Now  </h1><hr><br>
         <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='index.php'"></button>
         <br><br>
 
