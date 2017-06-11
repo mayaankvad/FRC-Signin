@@ -19,7 +19,14 @@ authenticate();
     <script>
         function run() {
             getOnline();
+            setCount();
             setTimeout(run, 1000);
+        }
+
+        function setCount() {
+            var table = document.getElementById('table');
+            var text = '(' + (table.rows.length-1) + ')'; // -1 cause one row is used for 'Online Now'
+            $('.count').text(text);
         }
 
         function getOnline() {
@@ -43,15 +50,15 @@ authenticate();
 
     <div class="content-block">
 
-        <h1>Active Now  </h1><hr><br>
+        <h1>Active Now <span class="count"><!-- filled through js --></span> </h1><hr><br>
         <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='index.php'"></button>
         <br><br>
 
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="table">
                 <thead>
                     <tr>
-                        <th>Online Now</th>
+                        <th>Online Now <span class="count"><!-- filled through js --></span> </th>
                     </tr>
                 </thead>
                 <tbody id="data">

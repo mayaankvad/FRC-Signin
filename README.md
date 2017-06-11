@@ -1,11 +1,12 @@
-
-
 FRC Team Sign In
 =======
 
-An auto signin I made to save everyone time and effort.
-Hopefully it will help avoid the long lines at attendance where people have to find their names 
-on a long spreadsheet and it will help sum the time they have comitted to the team.
-**Only mess with this if you know what you are doing!**
+An auto Signin to make things better. It can be deployed as is.
+Database schema is included.
+
+Right now the production server seams to be stuck on UTC time this app uses NYC time. 
+This is causing a negative hour count on (only) the live server.
 
 This project is licensed under the GNU General Public License v3.0
+
+Copyright &copy; 2017 Mayaank Vadlamani. All rights reserved.

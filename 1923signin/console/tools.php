@@ -4,7 +4,7 @@ include '../config.php';
 include '../databaseConfig.php';
 include '../formatting.php';
 
-date_default_timezone_set('America/New_York');
+// date_default_timezone_set('America/New_York');
 
 // connect to Database
 $conn = mysqli_connect($DBhost, $DBuser, $DBpassword, $DBname);
