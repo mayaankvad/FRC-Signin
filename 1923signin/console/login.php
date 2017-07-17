@@ -21,7 +21,7 @@ if(isset($_POST['submit'])) {
         <meta http-equiv="refresh" content="0;URL='death.php?error=javascript_disabled'" />
     </noscript>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
     <!-- Authenticate Button enabler -->
@@ -48,52 +48,77 @@ if(isset($_POST['submit'])) {
 
 <body onload="clientUsesIE()">
 
-<div class="container">
+<main>
 
-    <div <?php echo (!isset($_GET['error'])) ? 'class="content-block wow fadeIn" data-wow-delay="0.5s" data-wow-duration="2s"' : 'class="content-block"' ?>>
+    <div class="container">
 
-        <img src="../banner.png" alt="<h1>FRC 1923: The MidKnight Inventors Sign In</h1>" class="img img-responsive" onclick="window.location.href='../'">
-        <h4 class="text-center">Authentication Required</h4><br><hr>
+        <div <?php echo (!isset($_GET['error'])) ? 'class="card-panel wow fadeIn" data-wow-delay="0.5s" data-wow-duration="2s"' : 'class="card-panel"' ?>>
 
-        <form action="" method="post">
+            <div>
 
-            <input type="password" class="form-control" id="password-input" placeholder="Password" name="password" required autocomplete="off" onkeyup="disableButton()"><br><br>
-            
-			<?php
-            if(isset($_GET['error']) && $_GET['error'] == 'incorrect-password'){
-                echo '<div style="font-size: 20px; color: red;" class="wow shake" data-wow-duration="1s" data-wow-delay="0.3s">Incorrect Password</div>';
-            }
-            if(isset($_GET['error']) && $_GET['error'] == 'deactivate'){
-                echo '<div style="font-size: 20px; color: green;" >Deactivate Successful</div>';
-            }
 
-            /* a way to break in
-            if((isset($_GET['admin']) && $_GET['admin'] == 'root') && (isset($_GET['password']) && $_GET['password'] == 'admin')) {
-                nicedie("Password: $password <br>", 'System Administrator - Emergency Override');
-            } */
+                <img src="../images/banner.png" class="responsive-img" alt="The MidKnight Inventors" onclick="window.location='../'"><br>
+                <h5 class="center">Authentication Required!</h5><br>
 
-            ?>
+                <form action="" method="post">
 
-            <noscript>
-                <div style="font-size: 20px; color: red;">Error: Please Enable JavaScript!</div>
-            </noscript>
 
-            <br>
-            <input type="submit" name="submit" value="Authenticate" id="submit" class="btn btn-primary big-btn" disabled>
+                    <div class="input-field">
+                        <i class="material-icons prefix">vpn_key</i>
+                        <input type="password" id="password-input" name="password" onkeyup="disableButton()"
+                               autocomplete="off" required>
+                        <label for="password-input" class="center">Password</label>
+                    </div>
 
-        </form>
 
-		<!--
-        <br><small class="text-muted" style="font-size: 15px">by Mayaank 😎</small>
-		-->
+                    <?php
 
-		<br><br><br><small class="text-muted wow bounceInUp" style="font-size: 10px; font-family: monospace" data-wow-delay="5s" data-wow-duration="10s"><i>-- By Mayaank</i></small>
+                    if(isset($_GET['error']) && $_GET['error'] == 'incorrect-password'){
+                        echo '<h5 class="center red-text wow shake" data-wow-duration="1s" data-wow-delay="0.3s">Incorrect Password</h5>';
+                    }
+                    if(isset($_GET['error']) && $_GET['error'] == 'deactivate'){
+                        echo '<h5 class="center green-text">Deactivated</h5>';
+                    }
+
+                    /* a way to break in
+                    if((isset($_GET['admin']) && $_GET['admin'] == 'root') && (isset($_GET['password']) && $_GET['password'] == 'admin')) {
+                        nicedie("Password: $password <br>", 'System Administrator - Emergency Override');
+                    } */
+
+                    ?>
+
+                    <noscript>
+                        <h5 class="center red-text">Error: JavaScript Required</h5>
+                    </noscript>
+                    <br>
+
+                    <!-- Authenticate -->
+                    <div class="input-field center">
+                        <button class="btn waves-effect waves-light btn-large pink lighten-1 hoverable"
+                                type="submit" name="submit" value="Authenticate" id="submit" disabled>
+                            Authenticate
+                        </button>
+                    </div>
+
+                </form>
+
+                <span class="grey-text darken-3">
+                    &copy; 2017 Me!
+                </span>
+
+            </div>
+
+
+        </div>
 
 
     </div>
 
-    <?php echo $imports ?>
-</div>
+</main>
+
+<?php echo $copyright ?>
+
+<?php echo $imports ?>
 
 </body>
 

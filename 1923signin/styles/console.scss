@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300');
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-family: 'Lato', sans-serif;
+
+  background-color: black ;
+}
+
+main {
+  flex: 1 0 auto;
+  margin-top: 5%;
+}
+

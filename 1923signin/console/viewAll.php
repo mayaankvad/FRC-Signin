@@ -13,7 +13,10 @@ authenticate();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $title ?></title>
 
-    <link rel="stylesheet" href="style.css">
+    <?php echo $imports ?>
+    <script src="scripts/scroll.js"></script>
+
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
     <script>
@@ -39,24 +42,33 @@ authenticate();
 
 <body onload="run()">
 
-<div class="container">
+<main>
 
-    <div class="content-block">
+    <div class="container">
 
-        <h1>All User Data</h1><hr><br>
-        <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='index.php'"></button>
-        <br><br>
+        <div class="card-panel">
 
-        <div class="table-responsive">
-            <table class="table" id="table">
+            <h3 class="center" id="top">All Team Data</h3><hr><br>
+
+            <a class="center btn waves-effect waves-light pink lighten-1 z-depth-5" href="index.php">
+                <i class="material-icons">home</i>
+            </a>
+
+            <br><br><br>
+            <a href="#save">save</a>
+
+            <br><br>
+
+
+            <table id="table">
                 <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>Subteam</th>
-                    <th>Robot Day</th>
-                    <th>Hours</th>
-                    <th>Last Login</th>
-                </tr>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Subteam</th>
+                        <th>Robot Day</th>
+                        <th>Hours</th>
+                        <th>Last Login</th>
+                    </tr>
                 </thead>
                 <tbody id="data">
 
@@ -64,23 +76,40 @@ authenticate();
 
                 </tbody>
             </table>
+
+
+            <!-- Save btn -->
+            <button id="save" class="btn waves-effect waves-light pink lighten-1 z-depth-5">
+                <i class="fa fa-file-excel-o"></i> Save as Excel
+            </button>
+
+            <!-- Link for download as xls scripts -->
+            <script src="scripts/jquery.table2excel.js"></script>
+
+            <script>
+                $(function() {
+                    $("#save").click(function(){
+                        $("#table").table2excel({
+                            exclude: ".noExl",
+                            name: "mki-team-data"
+                        });
+                    });
+                });
+            </script>
+
+
+            <br><br>
+            <a href="#top">Top</a>
+
+
         </div>
 
-        <?php echo $imports ?>
-        <!-- Link for download as xls scripts -->
-        <script type="text/javascript" src="scripts/tableExport.js"></script>
-        <script type="text/javascript" src="scripts/jquery.base64.js"></script>
-
-        <br><br>
-        <button class="btn btn-primary" onClick ="$('#table').tableExport({type:'excel',escape:'false'});">
-            <i class="fa fa-download" aria-hidden="true"></i> Save as .xls
-        </button>
 
     </div>
 
-    <?php echo $copyright ?>
-</div>
+</main>
 
+    <?php echo $copyright ?>
 </body>
 
 </html>

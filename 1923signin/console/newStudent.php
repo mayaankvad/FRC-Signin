@@ -34,7 +34,7 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <title><?php echo $title ?></title>
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
     <!-- Check Name Availability -->
@@ -56,11 +56,11 @@ if(isset($_POST['submit'])) {
                     if(this.readyState == 4 && this.status == 200) {
 
                         if(this.responseText == "{}") {
-                            response.innerHTML = "<div class='alert alert-success'>This name is available</div>";
+                            response.innerHTML = "<span class='green-text'> <i class='material-icons'>done_all</i> Name Available</span>";
                             button.disabled = false;
                         }
                         else {
-                            response.innerHTML = "<div class='alert alert-danger'>This name is not available</div>";
+                            response.innerHTML = "<span class='red-text'> <i class='material-icons'>error_outline</i> Name Not Available</span>";
                             button.disabled = true;
                         }
 
@@ -77,77 +77,99 @@ if(isset($_POST['submit'])) {
 
 <body>
 
-<div class="container">
+<main>
 
-    <div class="content-block">
+    <div class="container">
 
-        <h1>Register New Team Member</h1><hr>
+        <div class="card-panel">
 
-        <form action="" method="post">
+            <h1 class="center">Register New Team Member</h1> <br>
 
-            <!--  Full Name -->
-            <div class="form-group">
-                <input type="text" class="form-control" id="name-input" name="name" placeholder="Full Name" onkeyup="getUser()" required autocomplete="off">
-                <small id="name-help" class="form-text text-muted">Please include proper capitalization and spacing</small>
+            <?php echo $homeBtn ?> <br><br>
 
-            </div>
-            <div id="response">
-            </div>
-            <br>
+            <form action="" method="post">
 
-            <!-- Subteam -->
-            <div class="form-group">
-                <select class="form-control" id="subteam" name="subteam" required>
-                    <option value="" disabled selected>Select a Subteam...</option>
-                    <option value="Mechanism">Mechanism</option>
-                    <option value="Drive Train">Drive Train</option>
-                    <option value="Programming">Programming</option>
-                    <option value="Electrical">Electrical</option>
-                    <option value="CAD">CAD</option>
-                </select>
-                <small id="" class="form-text text-muted">
-                    What Subteam are you on?
-                </small>
-            </div>
-            <br>
 
-            <!-- Day -->
-            <div class="form-group">
-                <select class="form-control" id="day" name="day" required>
-                    <option value="" disabled selected>Select a Robot...</option>
-                    <option value="Tesla">Tesla (Tuesday + Thursday + Saturday)</option>
-                    <option value="Edison">Edison (Wednesday + Friday + Sunday)</option>
-                    <option value="Both">Both (For Co-Captains Only)</option>
-                </select>
-                <small id="" class="form-text text-muted">
-                    What Robot do you work with?
-                </small>
-            </div>
-            <br>
+                <!-- Name Input -->
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" id="name-input" class="autocomplete" name="name" onkeyup="getUser()" autocomplete="off" required>
+                    <label for="name-input" class="center">Full Name</label>
+                </div>
 
-            <!-- Hours -->
-            <div class="form-group">
-                <input type="number" class="form-control" id="hours" name="hours" placeholder="Hours" required autocomplete="off">
-                <small id="" class="form-text text-muted">
-                    How many hours does this student already have?
-                </small>
-            </div>
-            <br>
-            
-            <input type="submit" id="submit" class="btn btn-primary submit" name="submit" value="Add New Student" disabled>
 
-        </form>
+                <div id="response">
+                    <!-- ajax -->
+                </div>
+                <br>
 
-        <br><br>
-        <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='index.php'"></button>
+                <!-- subteam -->
+                <div class="input-field">
+                    <i class="material-icons prefix fa fa-gear"></i>
+                    <select id="subteam" name="subteam" required>
+                        <option value="" disabled selected>Select Subteam</option>
+                        <option value="Mechanism">Mechanism</option>
+                        <option value="Drive Train">Drive Train</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="CAD">CAD</option>
+                    </select>
+                    <label>Subteam</label>
+                </div>
+                <br>
+
+                <!-- Day -->
+                <div class="input-field">
+                    <i class="material-icons prefix fa fa-clock-o"></i>
+                    <select id="day" name="day" required>
+                        <option value="" disabled selected>Select Day</option>
+                        <option value="Tesla">Tesla (Tuesday + Thursday + Saturday)</option>
+                        <option value="Edison">Edison (Wednesday + Friday + Sunday)</option>
+                        <option value="Both">Both (For Captains Only)</option>
+                    </select>
+                    <label>Day</label>
+                </div>
+                <br>
+
+                <!-- hours -->
+                <div class="input-field">
+                    <i class="material-icons prefix fa fa-hourglass"></i>
+                    <input type="number" id="hours" name="hours" required>
+                    <label for="hours" class="center">How many hours does this student already have?</label>
+                </div>
+                <br><br>
+
+
+                <button class="btn waves-effect waves-light btn-large green lighten-1 z-depth-5"
+                        type="submit" name="submit" value="submit" id="submit" disabled>
+                    <i class="material-icons prefix">add</i> Team Member
+                </button>
+                <br><br><br>
+
+
+
+            </form>
+
+
+        </div>
+
+
+
 
     </div>
 
+</main>
 
-    <?php echo $copyright; ?>
+<?php echo $copyright; ?>
 
-</div>
+
 <?php echo $imports ?>
+
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>
 
 </body>
 

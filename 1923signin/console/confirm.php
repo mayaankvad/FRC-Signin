@@ -7,7 +7,7 @@ $action = $_GET['action'];
 $heading = ($action == 'signoutall') ? "Sign Out All?": "Force Sign Out All?";
 $message = ($action == 'signoutall') ?
     "This will Sign out all active users and award hours, and add a record to the logs":
-    "This will Force Sign out all active users and will not award any hours. No record will be added to the logs.";
+    "This will Force Sign out all active users and <b>will not award any hours</b>. <br>No record will be added to the logs.";
 
 if(isset($_POST['submit'])) {
     if (md5($_POST['password']) != md5($password)) {
@@ -33,44 +33,81 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <title><?php echo $title ?></title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
+
+    <script>
+        PASSWORD_MIN_LENGTH = 4;
+        function disableButton(){
+            document.getElementById('submit').disabled = !(document.getElementById('password-input').value.length >= PASSWORD_MIN_LENGTH);
+        }
+    </script>
     
 </head>
 
 <body>
 
-<div class="container">
-    <div class="content-block">
+<main>
 
-        <h1 class="text-center"><?php echo $heading ?></h1><br><hr><br>
+    <div class="container">
 
-        <h4>
-            <?php echo $message ?> <br><b>This action is irreversible!</b> Are you sure you want to continue?
-        </h4>
+        <div class="card-panel">
 
-        <br><br>
-        <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='index.php'"></button>
+            <div class="center">
 
-        <br><br>
-        <button class="btn btn-danger" onclick="document.getElementById('authInput').style.visibility='visible'">
-            Authenticate <?php echo ($action == 'signoutall')? " Sign Out": " Force Sign Out"?>
-        </button>
+                <h3><?php echo $heading ?></h3><br><br>
 
-        <br><br><br>
-        <div id="authInput" style="visibility: hidden">
-            <form action="" method="post">
-                <input type="password" class="form-control" id="" placeholder="Password" name="password" required autocomplete="off"><br><br>
-                <input type="submit" class="btn btn-danger" name="submit"
-                       value="<?php echo ($action == 'signoutall')?"Sign Out All": "Force Sign Out All"?>"
-                >
-            </form>
+                <h4>
+                    <?php echo $message ?> <br>
+                    <b>This action is irreversible!</b> Are you sure you want to continue?
+                </h4>
+
+                <br><br>
+                <?php echo $homeBtn ?>
+
+                <br><br>
+                <a onclick="document.getElementById('authInput').style.visibility='visible'">
+                    Authenticate <?php echo ($action == 'signoutall')? " Sign Out": " Force Sign Out"?>
+                </a>
+
+                <br><br><br>
+
+
+                <div id="authInput" style="visibility: hidden">
+
+                    <form action="" method="post">
+
+                        <div class="input-field">
+                            <i class="material-icons prefix">vpn_key</i>
+                            <input type="password" id="password-input" name="password" onkeyup="disableButton()"
+                                   autocomplete="off" required>
+                            <label for="password-input" class="center">Password</label>
+                        </div>
+
+                        <div class="input-field center">
+                            <button class="btn waves-effect waves-light btn-large red lighten-1 hoverable"
+                                    type="submit" name="submit" value="submit" id="submit" disabled>
+                                <?php echo ($action == 'signoutall')?"Sign Out All": "Force Sign Out All"?>
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+
+            </div>
+
+
         </div>
-
-
     </div>
-    <?php echo $copyright ?>
-</div>
+
+</main>
+
+<?php echo $copyright ?>
+
+
 <?php echo $imports ?>
 
 </body>

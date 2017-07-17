@@ -1,16 +1,21 @@
 <?php
-session_start();
 include '../config.php';
+authenticate();
 
 if(!isset($_SESSION['message'])) {
-    header('Location: index.php');
+    $heading = $defaultMessageHeading;
+    $text = $defaultMessageText;
+    $time = $defaultMessageTime;
 } else {
     $heading = $_SESSION['message']['heading'];
-    $text = $_SESSION['message']['message'];
+    $text = $_SESSION['message']['text'];
+    $time = $_SESSION['message']['time'];
 
     $_SESSION['message'] = null;
     unset($_SESSION['message']);
 }
+
+header('refresh:' . $time . '; url=index.php'); // redirect after time
 
 ?>
 
@@ -20,39 +25,48 @@ if(!isset($_SESSION['message'])) {
 <head>
 
     <meta charset="UTF-8">
-    <title>The MidKnight Inventors</title>
+    <title><?php echo $title; ?></title>
 
-    <link rel="stylesheet" href="../console/style.css">
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
 </head>
 
-<style>
-    body {
-        font-size: 20px !important;
-    }
-</style>
 
 <body>
 
-<div class="container">
+<main>
 
-    <div class="content-block">
-        <h2><?php echo $heading; ?></h2>
-        <hr>
-        <?php echo $text; ?>
-        
-        <br><br><br>
+    <div class="container">
 
-        <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='../'"></button>
-        
-        <?php echo $helpText ?>
+        <div class="card-panel">
+
+            <div class="center">
+
+                <h3><?php echo $heading; ?></h3>
+                <br><br>
+
+                <p class="flow-text">
+                    <?php echo $text; ?>
+                </p>
+
+                <br><br><br>
+
+                <a href="index.php">Didn't redirect automatically?</a><br>
+
+                <?php echo $helpText ?>
+
+            </div>
+
+        </div>
+
     </div>
 
-</div>
+</main>
+
+<?php echo $copyright ?>
 
 <?php echo $imports ?>
-
 </body>
 
 </html>

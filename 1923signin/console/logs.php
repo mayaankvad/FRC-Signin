@@ -2,7 +2,11 @@
 include 'tools.php';
 authenticate();
 
-$view = toNameID(urldecode($_GET['view']));
+
+if(!isset($_GET['view']))
+    $view = 'all';
+else
+    $view = toNameID(urldecode($_GET['view']));
 
 $query = <<<END
 SELECT Date_Format(a.logTime, '%m/%d/%y') AS logDate, a.nameID, Date_Format(a.logtime, '%k:%i') AS signinTime,
@@ -12,6 +16,7 @@ SELECT Date_Format(a.logTime, '%m/%d/%y') AS logDate, a.nameID, Date_Format(a.lo
      b.flag = 0) AS signoutTime
 FROM logs a
 WHERE a.flag = 1
+ORDER BY id DESC;
 END;
 
 /*nameID, signinTime, signoutTime*/
@@ -35,23 +40,34 @@ if(!$result)
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $title ?></title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
 </head>
 
 <body>
 
-<div class="container">
+<main>
 
-    <div class="content-block">
+    <div class="container">
 
-        <h1>Attendance Logs <?php if($view != 'all') echo "For " . getFormattedName($view)?></h1><hr><br>
-        <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='index.php'"></button>
-        <br><br>
+        <div class="card-panel">
 
-        <div class="table-responsive">
-            <table class="table" id="log-table">
+            <h3>Attendance Logs <?php if($view != 'all') echo "For " . getFormattedName($view)?></h3><hr><br>
+
+            <?php echo $homeBtn ?>
+
+            <br><br>
+
+
+            <!-- Save btn -->
+            <button id="save" class="btn waves-effect waves-light pink lighten-1 z-depth-5">
+                <i class="fa fa-file-excel-o"></i> Save as Excel
+            </button>
+            <br><br><br>
+
+
+            <table id="log-table">
                 <thead>
                 <tr>
                     <th>Date</th>
@@ -79,21 +95,21 @@ if(!$result)
                         $signout = formatTime($row['signoutTime']);
 
                     $fullName = getFormattedName($nameID);
-                    $time = ($signout != null) ? formatSeconds(strtotime($signout) - strtotime($signin)) : null;
+                    $time = ($signout == null) ?  "N/A": formatSeconds(strtotime($signout) - strtotime($signin));
 
                     if($date != $previous) {
                         $d = date("l, F j, Y", strtotime( $date ));
-                        echo "<tr class='success'><td align='left'>$d</td><td></td><td></td><td></td><td></td></tr>";
+                        echo "<tr><td>$d</td><td></td><td></td><td></td><td></td></tr>";
                         $previous = $date;
                     }
 
                     if($view == 'all' || $view == $nameID) echo <<<END
-                    <tr class='success'>
-                        <td align='left'>$date</td>
-                        <td align='left'>$fullName</td>
-                        <td align='left'>$signin</td>
-                        <td align='left'>$signout</td>
-                        <td align='left'>$time</td>
+                    <tr>
+                        <td>$date</td>
+                        <td>$fullName</td>
+                        <td>$signin</td>
+                        <td>$signout</td>
+                        <td>$time</td>
                     </tr>
 END;
                 }
@@ -102,25 +118,35 @@ END;
 
                 </tbody>
             </table>
+
+
+
+            <?php echo $imports ?>
+
+            <!-- Link for download as xls scripts -->
+            <script src="scripts/jquery.table2excel.js"></script>
+
+            <script>
+                $(function() {
+                    $("#save").click(function(){
+                        $("#log-table").table2excel({
+                            exclude: ".noExl",
+                            name: "mki-logs"
+                        });
+                    });
+                });
+            </script>
+
+
+
         </div>
 
 
-        <?php echo $imports ?>
-        <!-- Link for download as xls scripts -->
-        <script type="text/javascript" src="scripts/tableExport.js"></script>
-        <script type="text/javascript" src="scripts/jquery.base64.js"></script>
-
-        <br><br>
-        <button class="btn btn-primary" onClick ="$('#log-table').tableExport({type:'excel',escape:'false'});">
-            <i class="fa fa-download" aria-hidden="true"></i> Save as .xls
-        </button>
-
     </div>
 
-    <?php echo $copyright ?>
-</div>
+</main>
 
-
+<?php echo $copyright ?>
 </body>
 
 </html>
