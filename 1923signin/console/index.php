@@ -130,19 +130,27 @@ if (isset($_POST['signout'])) {
 
 <body onload="run()">
 
-
 <?php
 
-    if($toast != null)
-        echo <<<"END"
-    <script>
-        Materialize.toast("$toast", 3000);
-    </script>
+if($toast != null)
+    echo <<<"END"
+            <script>
+                var msg ="$toast";
+                var col = '';
+                if(msg.indexOf('already') > -1) {
+                    col = 'red-text';
+                } else if(msg.indexOf('signed in') > -1) {
+                    col = 'green lighten-1';
+                } else if(msg.indexOf('signed out') > -1) {
+                    col = 'red lighten-1';
+                }
+
+                Materialize.toast(msg, 3000, col);
+            </script>
 END;
-        $toast = null;
+$toast = null;
 
 ?>
-
 
 <main>
 
