@@ -2,17 +2,19 @@
 include 'tools.php';
 authenticate();
 
-if(isset($_POST['moreinfo'])) {
+$toast = null;
+
+if (isset($_POST['moreinfo'])) {
     $_SESSION['viewUser'] = $_POST['name'];
     header('Location: viewDetails.php');
 }
 
-if(isset($_POST['signin'])) {
-    signin($_POST['name']);
+if (isset($_POST['signin'])) {
+    $toast = signin($_POST['name']);
 }
 
-if(isset($_POST['signout'])) {
-    signout($_POST['name']);
+if (isset($_POST['signout'])) {
+    $toast = signout($_POST['name']);
 }
 
 ?>
@@ -25,18 +27,63 @@ if(isset($_POST['signout'])) {
     <meta charset="UTF-8">
     <title><?php echo $title ?></title>
 
-    <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/console.css">
 
     <?php echo $imports ?>
-    <!-- additional JQuery resources for autocomplete -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-    <!-- Change the buttons -->
     <script>
+        // set autocomplete for names
+        $(function () {
+            $(function () {
+                $('input.autocomplete').autocomplete({
+                    data: {
+                        <?php
+
+                        $query = "SELECT fullName FROM users";
+                        $result = mysqli_query($conn, $query);
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo '"' . $row['fullName'] . '":null,';
+                        }
+
+                        ?>
+                    },
+                    limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
+                    onAutocomplete: function (val) {
+                        // Callback function when value is autcompleted.
+                    },
+                    minLength: 3, // The minimum length of the input for the autocomplete to start. Default: 1.
+                });
+            });
+
+        });
+
+        // initialize model (for menu buttons)
+        $(document).ready(function () {
+                $('.modal').modal({
+                        dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                        opacity: .5, // Opacity of modal background
+                        inDuration: 300, // Transition in duration
+                        outDuration: 200, // Transition out duration
+                        startingTop: '4%', // Starting top style attribute
+                        endingTop: '10%', // Ending top style attribute
+                        ready: function (modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+
+                        },
+                        complete: function () { // Callback for Modal close
+
+                        }
+                    }
+                );
+            }
+        );
+
+
+        function run() {
+            getUser();
+            setTimeout(run, 250);
+        }
+
         function getUser() {
             var name = document.getElementById("name-input").value;
             var signInButton = document.getElementById("signin-btn");
@@ -77,68 +124,116 @@ if(isset($_POST['signout'])) {
                 xmlhttp.send();
             }
         }
-
-        function run() {
-            getUser();
-            setTimeout(run, 250);
-        }
-
-        // set autocomplete for names
-        $( function() {
-            var availableNames = [
-                <?php
-                    $query = "SELECT fullName FROM users";
-                    $result = mysqli_query($conn, $query);
-                    while($row = mysqli_fetch_array($result)) {
-                        echo '"' . $row['fullName'] . '", ';
-                    }
-                ?>
-            ];
-            $("#name-input").autocomplete({
-                source: availableNames
-            });
-        });
     </script>
 
 </head>
 
 <body onload="run()">
 
-<div class="container">
 
-    <div class="content-block">
+<?php
 
-        <h1 class="text-center">Team 1923 Sign In Below</h1><br><hr><br>
+    if($toast != null)
+        echo <<<"END"
+    <script>
+        Materialize.toast("$toast", 3000);
+    </script>
+END;
+        $toast = null;
 
-        <form action="" method="post">
-            <input type="text" class="form-control" id="name-input" placeholder="Full Name" name="name" autocomplete="on" onkeyup="getUser()" required><br>
+?>
+
+
+<main>
+
+
+    <div class="container">
+
+        <div class="card-panel">
+
+            <img src="../images/banner.png" class="responsive-img" alt="Sign In Below"><br>
+            <h5 class="center">Hi!</h5><br>
+
+            <form action="" method="post">
+                <!-- Name Input -->
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" id="name-input" class="autocomplete" name="name" onkeyup="getUser()"
+                           autocomplete="off" autofocus required>
+                    <label for="name-input" class="center">Full Name</label>
+                </div>
+
+
+                <div class="input-field center">
+
+                    <!-- Sign In -->
+                    <button class="btn waves-effect waves-light btn-large green lighten-1 hoverable"
+                            type="submit" name="signin" value="Sign In" id="signin-btn" disabled>
+                        Sign In
+                    </button>
+
+                    <!-- Info -->
+                    <button class="btn waves-effect waves-light btn-large pink lighten-1 hoverable"
+                            type="submit" name="moreinfo" value="More Info" id="moreinfo-btn" disabled>
+                        Info <i class="material-icons right">info_outline</i>
+                    </button>
+
+                    <!-- Sign Out -->
+                    <button class="btn waves-effect waves-light btn-large red lighten-1 hoverable"
+                            type="submit" name="signout" value="Sign Out" id="signout-btn" disabled>
+                        Sign Out
+                    </button>
+
+                </div>
+
+            </form>
+
             <br><br>
-            <input type="submit" name="signin" value="Sign In" id="signin-btn" class="btn btn-primary big-btn" disabled>
-            <input type="submit" name="moreinfo" value="More Info" id="moreinfo-btn" class="btn btn-primary big-btn" disabled>
-            <input type="submit" name="signout" value="Sign Out" id="signout-btn" class="btn btn-primary big-btn" disabled>
-        </form>
-        <br><br>
 
-        <!-- -->
-        <br>
-        <button class="btn btn-primary submit" onclick="window.location.href = 'online.php'">Currently Online</button>
-        <button class="btn btn-primary submit" onclick="window.location.href = 'confirm.php?action=signoutall'">Sign Out All</button>
-        <button class="btn btn-primary submit" onclick="window.location.href = 'confirm.php?action=forcesignoutall'">Force Sign Out All</button>
-        <!-- -->
+            <!-- Popup Trigger -->
+            <a class="waves-effect waves-light btn pink lighten-1" href="#popup"><i class="material-icons">menu</i></a>
 
-        <br><br>
-        <button class="btn btn-primary submit" onclick="window.location.href = 'viewAll.php'">View All Data</button>
-        <button class="btn btn-primary submit" onclick="window.location.href = 'logs.php?view=all'">View Logs</button>
-        <button class="btn btn-primary submit" onclick="window.location.href = 'newStudent.php'">New Student?</button>
-        <!-- -->
+            <!-- Popup Structure -->
+            <div id="popup" class="modal">
+                <div class="modal-content">
+                    <div class="center">
+                        <a class="btn waves-effect waves-light green lighten-1 hoverable" href="online.php">Online</a>
+                        <br><br>
 
-        <br>
-        <button class="btn btn-primary submit" onclick="window.location.href = 'settings.php'">Settings</button>
-        
-    </div>
+                        <a class="btn waves-effect waves-light pink lighten-1 hoverable" href="viewAll.php">All Data</a>
+                        <br><br>
 
-    <?php echo $copyright ?>
-</div>
+                        <a class="btn waves-effect waves-light pink lighten-1 hoverable" href="newStudent.php">New Student</a>
+                        <br><br>
+
+                        <a class="btn waves-effect waves-light blue lighten-1 hoverable" href="logs.php">Logs</a>
+                        <br><br>
+
+                        <a class="btn waves-effect waves-light red lighten-1 hoverable" href="confirm.php?action=signoutall">Sign Out All</a>
+                        <br><br>
+
+                        <a class="btn waves-effect waves-light red darken-1 hoverable" href="confirm.php?action=forcesignoutall">Force Sign Out All</a>
+                        <br><br>
+
+                        <a class="btn waves-effect waves-light pink lighten-1 hoverable" href="settings.php"><i class="material-icons">settings</i></a>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
+                </div>
+            </div>
+
+        </div> <!-- ./card-panel -->
+
+
+    </div> <!-- ./container -->
+
+</main>
+
+
+<?php echo $copyright ?>
+
 
 </body>
 

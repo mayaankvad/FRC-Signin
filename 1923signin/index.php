@@ -1,3 +1,25 @@
+<?php
+// is this app taken offline?
+// delete killed.txt to restore app
+
+$deathFile = 'killed.txt';
+
+if(file_exists($deathFile)) {
+    header('Location: death.php?error=kill');
+}
+
+if(isset($_GET['command']) && isset($_GET['auth'])) {
+    $cmd = $_GET['command'] == 'kill';
+    $_GET['auth'] = '000';
+
+    fopen($deathFile, "w");
+
+    header('Location: death.php?error=kill');
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,11 +114,11 @@
 
 <div class="container">
 
-    <img src="logo.jpeg" alt="The MidKnight Inventors" width="250px" class="img img-responsive center-block wow fadeInDown" data-wow-delay="0.3s" data-wow-duration="2s">
+    <img src="images/logo.jpeg" alt="The MidKnight Inventors" width="250px" class="img img-responsive center-block wow fadeInDown" data-wow-delay="0.3s" data-wow-duration="2s">
     <h1 class="wow fadeIn" data-wow-delay="0.5s" data-wow-duration="2s">Team Sign In</h1><br>
-    <button class="btn btn-default mki-btn center-block wow fadeInUp" data-wow-delay="1s" data-wow-duration="3s" onclick="window.location.href = 'CheckStats/'">Check Your Stats</button><br>
+    <button class="btn btn-default mki-btn center-block wow fadeInUp" data-wow-delay="1s" data-wow-duration="3s" onclick="window.location.href = 'checkStats/'">Check Your Stats</button><br>
     <button class="btn btn-default mki-btn center-block wow fadeInUp" data-wow-delay="1.3s" data-wow-duration="3s" onclick="window.location.href = 'register/'">Register</button> <br>
-    <button class="btn btn-default mki-btn center-block wow fadeInUp" data-wow-delay="1.6s" data-wow-duration="3s" onclick="window.location.href = 'console/'">Go to Console</button>
+    <button class="btn btn-default mki-btn center-block wow fadeInUp" data-wow-delay="1.6s" data-wow-duration="3s" onclick="window.location.href = 'console/'">Console</button>
 
 	<br><br><br><small class="text-muted wow bounceInUp" style="font-size: 10px; font-family: monospace" data-wow-delay="5s" data-wow-duration="10s"><i>-- By Mayaank</i></small>
 

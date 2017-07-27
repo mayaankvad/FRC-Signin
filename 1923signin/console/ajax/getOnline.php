@@ -21,6 +21,6 @@ if(!$result) die();
 
 while($row = mysqli_fetch_array($result)) {
     $fullName = $row['fullName'];
-    echo ("<tr class='success'><td>$fullName</td></tr>");
+    echo "<tr><td>$fullName</td></tr>\n" ;
 }
 

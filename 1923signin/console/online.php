@@ -13,7 +13,7 @@ authenticate();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $title ?></title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
     <script>
@@ -25,7 +25,9 @@ authenticate();
 
         function setCount() {
             var table = document.getElementById('table');
+
             var text = '(' + (table.rows.length-1) + ')'; // -1 cause one row is used for 'Online Now'
+
             $('.count').text(text);
         }
 
@@ -46,19 +48,21 @@ authenticate();
 
 <body onload="run()">
 
-<div class="container">
+<main>
 
-    <div class="content-block">
+    <div class="container">
 
-        <h1>Active Now <span class="count"><!-- filled through js --></span> </h1><hr><br>
-        <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='index.php'"></button>
-        <br><br>
+        <div class="card-panel">
 
-        <div class="table-responsive">
-            <table class="table" id="table">
+            <h3 class="center">Online<span class="count"><!-- filled through js --></span> </h3><hr><br>
+
+            <?php echo $homeBtn ?>
+            <br><br>
+
+            <table class="centered" id="table">
                 <thead>
                     <tr>
-                        <th>Online Now <span class="count"><!-- filled through js --></span> </th>
+                        <th>Online <span class="count"><!-- filled through js --></span> </th>
                     </tr>
                 </thead>
                 <tbody id="data">
@@ -67,13 +71,14 @@ authenticate();
 
                 </tbody>
             </table>
+
         </div>
 
     </div>
 
-    <?php echo $copyright ?>
-</div>
+</main>
 
+<?php echo $copyright ?>
 
 </body>
 <?php echo $imports ?>

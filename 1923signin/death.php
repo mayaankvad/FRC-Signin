@@ -1,5 +1,11 @@
 <?php
 
+include 'config.php';
+
+$heading = 'Message';
+$message = 'This page did not get a message to show';
+$helpText = 'Contact me for help';
+
 if(isset($_GET['error'])) {
     if($_GET['error'] == 'javascript_disabled') {
         $heading = 'JavaScript is Disabled!';
@@ -17,11 +23,21 @@ END;
         (Yes, we do support MS Edge!)<br>
 END;
     }
+
+    if($_GET['error'] == 'kill') {
+        $heading = 'MKI-Team-Management-System: ffline';
+        $message = <<<END
+        This means that for some reason the app is unsafe to use and is taken offline. <br>
+        It could be a database issue or team data could be at risk. <br>Text me to fix it. <br> 
+END;
+    }
+
 }
 else
     header('Location: index.php');
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,54 +45,39 @@ else
 <head>
 
     <meta charset="UTF-8">
-    <title>The MidKnight Inventors</title>
+    <title><?php echo $title ?></title>
 
-    <link rel="stylesheet" href="console/style.css">
-    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="styles/console.css">
+    <link rel="shortcut icon" href="favicon.ico">
 
 </head>
 
 <body>
 
-<div class="container">
+<main>
 
-    <div class="content-block">
-        <h2><?php echo $heading; ?></h2>
-        <hr>
-        <?php echo $message; ?>
-        <br><br><br>
+    <div class="container">
+
+        <div class="card-panel">
+            <h3><?php echo $heading; ?></h3> <br><br>
+
+
+            <p class="flow-text"> <?php echo $message; ?> </p>
+
+            <br><br><br>
+            <p class="flow-text"> <?php echo $helpText; ?> </p>
+        </div>
+
     </div>
 
-    <br><div class="copyright">Copyright &copy; 2017 Team 1923 The MidKnight Inventors, All Rights Reserved</div>
-</div>
+</main>
+
+<?php echo $copyright; ?>
 
 
-<cdn>
-    <!-- Links to resources -->
-    <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Enables Bootstrap compatibility -->
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Enables Bootstrap compatibility -->
-
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Animation resources -->
-    <!-- Animate css-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
-
-    <!-- WOW js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <script>new WOW().init();</script>
-</cdn>
-
+<?php echo $imports ?>
 </body>
+
 
 </html>
 

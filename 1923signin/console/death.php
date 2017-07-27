@@ -34,25 +34,33 @@ END;
     <meta charset="UTF-8">
     <title><?php echo $title ?></title>
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
 </head>
 
 <body>
 
-<div class="container">
+<main>
 
-    <div class="content-block">
-        <h2><?php echo $heading; ?></h2>
-        <hr>
-        <?php echo $message; ?>
-        <br><br><br>
-        <?php echo $helpText ?>
+    <div class="container">
+
+        <div class="card-panel">
+            <h3><?php echo $heading; ?></h3> <br><br>
+
+
+            <p class="flow-text"> <?php echo $message; ?> </p>
+
+            <br><br><br>
+            <p class="flow-text"> <?php echo $helpText; ?> </p>
+        </div>
+
     </div>
 
-    <?php echo $copyright; ?>
-</div>
+</main>
+
+<?php echo $copyright; ?>
+
 
 <?php echo $imports ?>
 </body>

@@ -28,7 +28,7 @@ else {
 
 if(isset($_POST['change-profile'])) {
 
-    if(md5($_POST['password'] == md5($password))) {
+    if(md5($_POST['password']) == md5($password)) {
         $time = ($_POST['hours'] != null) ? $seconds + ($_POST['hours'] * 3600) : $seconds; // sec
         $team = ($_POST['subteam'] != null) ? $_POST['subteam'] : $subteam; // subteam
         $robot = ($_POST['day'] != null) ? $_POST['day'] : $day; // day
@@ -61,23 +61,36 @@ if(isset($_POST['change-profile'])) {
     <meta charset="UTF-8">
     <title><?php echo $title ?></title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/console.css">
     <link rel="shortcut icon" href="../favicon.ico">
+
+    <?php echo $imports ?>
+
+
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
 
 </head>
 
 <body>
 
-<div class="container">
+<main>
 
-    <div class="content-block">
+    <div class="container">
 
-        <h1 class="text-center">Profile for <?php echo $fullName ?></h1><br><hr>
-        <button class="btn btn-primary home-btn fa fa-home fa-1x" onclick="window.location.href='index.php'"></button><br>
-        <br><br><br>
+        <div class="card-panel">
 
-        <div class="table-responsive">
-            <table class="table" id="table">
+            <h3 class="center">Profile for <?php echo $fullName ?></h3><br><hr>
+
+            <a class="center btn waves-effect waves-light pink lighten-1 z-depth-5" href="index.php">
+                <i class="material-icons">home</i>
+            </a>
+            <br><br>
+
+            <table id="table">
                 <tbody>
 
                     <tr>
@@ -103,63 +116,80 @@ if(isset($_POST['change-profile'])) {
 
                 </tbody>
             </table>
+
+            <br><br>
+            <a class=" btn waves-effect waves-light pink lighten-1 z-depth-5" href="<?php echo "logs.php?view=$nameID"; ?>">
+                Logs for <?php echo $fullName ?>
+            </a>
+
+            <br><br>
+
+            <a onclick="document.getElementById('form').style.visibility='visible'">Edit Profile?</a> <br><br>
+
+            <!-- edit profile -->
+            <div id="form" style="visibility: hidden;">
+
+                <form action="" method="post">
+
+                    <!-- hours -->
+                    <div class="input-field">
+                        <i class="material-icons prefix fa fa-hourglass"></i>
+                        <input type="number" id="number" name="hours">
+                        <label for="number" class="center">Hours to Add</label>
+                    </div>
+
+                    <!-- subteam -->
+                    <div class="input-field">
+                        <i class="material-icons prefix fa fa-gear"></i>
+                        <select id="subteam" name="subteam" >
+                            <option value="" disabled selected>Choose Subteam</option>
+                            <option value="Mechanism">Mechanism</option>
+                            <option value="Drive Train">Drive Train</option>
+                            <option value="Programming">Programming</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="CAD">CAD</option>
+                        </select>
+                        <label>Subteam</label>
+                    </div>
+                    <br>
+
+                    <!-- Day -->
+                    <div class="input-field">
+                        <i class="material-icons prefix fa fa-clock-o"></i>
+                        <select id="day" name="day" >
+                            <option value="" disabled selected>Select Day</option>
+                            <option value="Tesla">Tesla (Tuesday + Thursday + Saturday)</option>
+                            <option value="Edison">Edison (Wednesday + Friday + Sunday)</option>
+                            <option value="Both">Both (For Captains Only)</option>
+                        </select>
+                        <label>Day</label>
+                    </div>
+                    <br>
+
+
+                    <div class="input-field">
+                        <i class="material-icons prefix">vpn_key</i>
+                        <input type="password" id="password" name="password" autocomplete="off" required>
+                        <label for="password" class="center">Password</label>
+                    </div>
+
+
+                    <button class="btn waves-effect waves-light btn-large pink lighten-1 hoverable"
+                            type="submit" name="change-profile" value="Update Profile" id="submit">
+                        Update Profile
+                    </button>
+
+                </form>
+            </div>
+
         </div>
 
-        <br><br><br>
-        <button class="btn btn-primary" onclick="window.location.href='<?php echo "logs.php?view=$nameID"; ?>'">
-            Logs for this user
-        </button><br>
-
-        <br><br>
-
-        <button class="btn btn-success" onclick="document.getElementById('form').style.visibility='visible'">
-            Edit Profile?
-        </button> <br><br>
-        
-        <div id="form" style="visibility: hidden;">
-            <form action="" method="post">
-                <input type="number" class="form-control" id="number" name="hours" placeholder="Hours To Add" ><br>
-
-
-                <div class="form-group">
-                    <select class="form-control" id="subteam" name="subteam" >
-                        <option value="" disabled selected>Select a Subteam...</option>
-                        <option value="Mechanism">Mechanism</option>
-                        <option value="Drive Train">Drive Train</option>
-                        <option value="Programming">Programming</option>
-                        <option value="Electrical">Electrical</option>
-                        <option value="CAD">CAD</option>
-                    </select>
-                    <small id="" class="form-text text-muted">
-                        Change Subteam
-                    </small>
-                </div>
-                <br>
-
-                <!-- Day -->
-                <div class="form-group">
-                    <select class="form-control" id="day" name="day" >
-                        <option value="" disabled selected>Select a Robot...</option>
-                        <option value="Tesla">Tesla (Tuesday + Thursday + Saturday)</option>
-                        <option value="Edison">Edison (Wednesday + Friday + Sunday)</option>
-                        <option value="Both">Both (For Co-Captains Only)</option>
-                    </select>
-                    <small id="" class="form-text text-muted">
-                        Change Day
-                    </small>
-                </div>
-                <br>
-
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required autocomplete="off"> <br>
-                <input type="submit" id="submit" class="btn btn-primary submit" name="change-profile" value="Update Profile"><br>
-            </form>
-        </div>
 
     </div>
 
-    <?php echo $copyright ?>
-</div>
-<?php echo $imports ?>
+</main>
+
+<?php echo $copyright ?>
 
 </body>
 

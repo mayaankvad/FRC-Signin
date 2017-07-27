@@ -12,11 +12,23 @@ include '../config.php';
     <meta charset="UTF-8">
     <title>The MidKnight Inventors</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="../styles/stats.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
-    <?php echo $imports ?>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
     <script>
+        // TODO formatting data & correcting errors
         function getUser() {
             var str = document.getElementById("name-input").value;
 
@@ -47,7 +59,7 @@ include '../config.php';
                             msg += '</tbody></table></div>';
 
                             var url = 'logs.php?view=' + encodeURI(data.fullName);
-                            msg += '<button class="btn btn-primary" onclick="window.location.href=\''+url+'\'">View Logs</button>';
+                            msg += '<button class="btn waves-effect waves-light btn-large pink lighten-1" onclick="window.location.href=\''+url+'\'">View Logs</button>';
                             document.getElementById("user-info").innerHTML = msg;
                         }
                     }
@@ -63,65 +75,43 @@ include '../config.php';
 
     </script>
 
-    <style>
-
-        body {
-            background-color: #000000 !important;
-            color: #ffffff !important;
-            align-items: center;
-            align-content: center;
-        }
-
-        #form{
-            margin-top: 30px;
-            align-items: center !important;
-        }
-
-        #heading {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #name-input {
-            text-align: center !important;
-            font-size: 15px;
-            margin-right: 50%;
-        }
-
-        #user-info {
-            text-align: center;
-        }
-
-    </style>
 
 </head>
 
 <body>
 
-<div class="container">
+<main>
 
-    <div id="heading" class="wow fadeIn" data-wow-delay="0.3s" data-wow-duration="2s">
-        <img src="../banner.png" alt="The MidKnight Inventors" width="" class="img img-responsive center-block" onclick="window.location.href='../'">
 
-        <h4>Use this page to see your stats</h4>
-        <h4>If you need help contact us</h4>
-		<h5>Case Insensitive ;)</h5>
+    <div class="container">
+
+        <img src="../images/banner.png" class="responsive-img" alt="The MidKnight Inventors" onclick="window.location='../'"><br>
+        <h5 class="center">Your Data</h5><br>
+
+
+        <nav>
+            <div class="nav-wrapper">
+                <form>
+                    <div class="input-field">
+                        <input id="name-input" type="search" onkeyup="getUser()" class="white" autofocus required>
+                        <label class="label-icon" for="name-input"><i class="material-icons">person</i></label>
+                        <i class="material-icons">close</i>
+                    </div>
+                </form>
+            </div>
+        </nav>
+
+
+        <br>
+        <div class="center" id="user-info">
+            <!-- Filled in through ajax call -->
+        </div>
+
+        <br><br><br><br>
+
     </div>
 
-    <div id="form" class="wow fadeIn" data-wow-delay="0.3s" data-wow-duration="2s">
-        <form action="" method="post">
-            <input type="text" class="form-control" id="name-input" placeholder="Full Name" name="name" autocomplete="on" onkeyup="getUser()" required>
-        </form>
-    </div>
-
-
-    <br>
-    <div id="user-info">
-        <!-- Filled in through ajax call -->
-    </div>
-    <br><br><br><br>
-
-</div>
+</main>
 
 </body>
 
