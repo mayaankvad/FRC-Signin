@@ -32,6 +32,15 @@ if (isset($_POST['signout'])) {
 
     <?php echo $imports ?>
 
+	<style>
+		@media screen {
+			.block-btn {
+				display: block !important;
+				margin-top: 5px;
+			}
+		}
+	</style>
+
     <script>
         // set autocomplete for names
         $(function () {
@@ -175,19 +184,19 @@ $toast = null;
                 <div class="input-field center">
 
                     <!-- Sign In -->
-                    <button class="btn waves-effect waves-light btn-large green lighten-1 hoverable"
+                    <button class="btn waves-effect waves-light btn-large green lighten-1 hoverable block-btn"
                             type="submit" name="signin" value="Sign In" id="signin-btn" disabled>
                         Sign In
                     </button>
 
                     <!-- Info -->
-                    <button class="btn waves-effect waves-light btn-large pink lighten-1 hoverable"
+                    <button class="btn waves-effect waves-light btn-large pink lighten-1 hoverable block-btn"
                             type="submit" name="moreinfo" value="More Info" id="moreinfo-btn" disabled>
                         Info <i class="material-icons right">info_outline</i>
                     </button>
 
                     <!-- Sign Out -->
-                    <button class="btn waves-effect waves-light btn-large red lighten-1 hoverable"
+                    <button class="btn waves-effect waves-light btn-large red lighten-1 hoverable block-btn"
                             type="submit" name="signout" value="Sign Out" id="signout-btn" disabled>
                         Sign Out
                     </button>

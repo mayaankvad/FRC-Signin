@@ -1,25 +1,3 @@
-<?php
-// is this app taken offline?
-// delete killed.txt to restore app
-
-$deathFile = 'killed.txt';
-
-if(file_exists($deathFile)) {
-    header('Location: death.php?error=kill');
-}
-
-if(isset($_GET['command']) && isset($_GET['auth'])) {
-    $cmd = $_GET['command'] == 'kill';
-    $_GET['auth'] = '000';
-
-    fopen($deathFile, "w");
-
-    header('Location: death.php?error=kill');
-}
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +5,7 @@ if(isset($_GET['command']) && isset($_GET['auth'])) {
 
     <meta charset="UTF-8">
     <title>MidKnight Inventors Sign In</title>
-    
+
     <noscript>
         <meta http-equiv="refresh" content="0;URL='death.php?error=javascript_disabled'" />
     </noscript>
