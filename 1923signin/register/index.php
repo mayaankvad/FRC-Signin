@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include '../databaseConfig.php';
 include '../config.php';
 include '../formatting.php';
@@ -35,7 +34,7 @@ if(isset($_POST['submit'])) {
 
 function display($message, $heading=null) {
     $_SESSION['message'] = [
-        'message' => $message,
+        'text' => $message,
         'heading' => $heading
     ];
     header('Location: message.php');

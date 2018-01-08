@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 $title = 'The MidKnight Inventors';
 
@@ -7,7 +7,7 @@ $defaultDeathScreenMessage = "Something went wrong and we don't know what. Call 
 
 $defaultMessageHeading = 'Message';
 $defaultMessageText = 'This page did not receive a message';
-$defaultMessageTime = '5';
+$defaultMessageTime = '3';
 
 $helpText = "If you need help text me!";
 

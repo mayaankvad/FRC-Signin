@@ -1,21 +1,17 @@
 <?php
+session_start();
 include '../config.php';
-authenticate();
 
 if(!isset($_SESSION['message'])) {
     $heading = $defaultMessageHeading;
     $text = $defaultMessageText;
-    $time = $defaultMessageTime;
 } else {
     $heading = $_SESSION['message']['heading'];
     $text = $_SESSION['message']['text'];
-    $time = $_SESSION['message']['time'];
 
     $_SESSION['message'] = null;
     unset($_SESSION['message']);
 }
-
-header('refresh:' . $time . '; url=index.php'); // redirect after time
 
 ?>
 
@@ -52,7 +48,7 @@ header('refresh:' . $time . '; url=index.php'); // redirect after time
 
                 <br><br><br>
 
-                <a href="index.php">Didn't redirect automatically?</a><br>
+                <a href="index.php">Back</a><br>
 
                 <?php echo $helpText ?>
 
